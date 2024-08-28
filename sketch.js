@@ -1,6 +1,7 @@
 let flock;
 
 function setup() {
+  console.log('hello world');
   createCanvas(6000, 3500);
   createP('Drag the mouse to generate new boids.');
 
