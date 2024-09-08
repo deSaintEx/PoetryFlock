@@ -1,8 +1,7 @@
 
-
-// Define the global variables.
-// Create an array to store words from the p5 homepage statement.
 let words = 
+// Define the global variables.
+// Create an array to store words from a poem
 
   ['something', 'to', 'say', 'and', 'voice', 'do', 'seldom', 'walk', 
     'abreast', 'too', 'far', 'ahead', 'might', 'run', 'while', 'still', 
@@ -11,7 +10,7 @@ let words =
     'did', 'thing', 'erase', 'then', 'will', 'not', 'recall', 'what', 'made', 
     'a', 'with', 'itself', 'else', 'away'];
 
-// Set the amount of words to be drawn on the canvas,   as
+// Set the amount of words to be drawn on the canvas, as
 // well as the starting hue value. Declare the position variable,
 // which will be used to randomly start the word selection in the array.
 let wordCount = 500;

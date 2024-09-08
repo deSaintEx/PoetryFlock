@@ -1,13 +1,23 @@
 let flock;
+let hue;
+let words = ['something', 'to', 'say', 'and', 'voice', 'do', 'seldom', 'walk', 
+  'abreast', 'too', 'far', 'ahead', 'might', 'run', 'while', 'still', 
+  'dies', 'for', 'breath', 'so', 'was', 'one', 'that', 'the', 'other', 
+  'strides', 'apace', 'it', 'seems', 'time', 'has', 'passed', 'which', 
+  'did', 'thing', 'erase', 'then', 'will', 'not', 'recall', 'what', 'made', 
+  'a', 'with', 'itself', 'else', 'away'];
+let wordCount = 500;
+
 
 function setup() {
   console.log('hello world');
-  createCanvas(6000, 3500);
-  createP('Drag the mouse to generate new boids.');
+  createCanvas(700, 700, WEBGL);
+  createP('Drag the mouse to generate new woids.');
+//changed canvas size to make a smaller window, added WEBGL to see if it allows text render
 
   flock = new Flock();
 
-  // Add an initial set of boids into the system
+  // Add an initial set of woids (instead of boids) into the system (created further below as a class Constructor)
   for (let i = 0; i < 100; i++) {
     let b = new Boid(width / 2, height / 2);
     flock.addBoid(b);
@@ -16,10 +26,13 @@ function setup() {
   describe(
     'A group of bird-like objects, represented by triangles, moving across the canvas, modeling flocking behavior.'
   );
+
+  // Define hue as a random value.
+  hue = random(180, 360)
 }
 
 function draw() {
-  background(0);
+  background(hue, 95, 25);
   flock.run();
 }
 
@@ -47,12 +60,14 @@ class Flock {
   }
 }
 
+
+//adjusting size and color of boids to see if will apply to text size
 class Boid {
   constructor(x, y) {
     this.acceleration = createVector(0, 0);
     this.velocity = createVector(random(-1, 1), random(-1, 1));
     this.position = createVector(x, y);
-    this.size = 3.0;
+    this.size = random(1, 10);
 
     // Maximum speed
     this.maxSpeed = 3;
@@ -60,7 +75,8 @@ class Boid {
     // Maximum steering force
     this.maxForce = 0.05;
     colorMode(HSB);
-    this.color = color(random(256), 255, 255);
+    hue = random(180, 360); //is this needed here?
+    this.color = (hue, 200, random(25,95), random(25,95));
   }
 
   run(boids) {
@@ -125,17 +141,41 @@ class Boid {
 
   render() {
     // Draw a triangle rotated in the direction of velocity
+    //try to change to following to render text from an array of words instead of triangles
     let theta = this.velocity.heading() + radians(90);
     fill(this.color);
     stroke(255);
     push();
     translate(this.position.x, this.position.y);
     rotate(theta);
-    beginShape();
+
+    //try adding text here
+    let words = ['something', 'to', 'say', 'and', 'voice', 'do', 'seldom', 'walk', 
+      'abreast', 'too', 'far', 'ahead', 'might', 'run', 'while', 'still', 
+      'dies', 'for', 'breath', 'so', 'was', 'one', 'that', 'the', 'other', 
+      'strides', 'apace', 'it', 'seems', 'time', 'has', 'passed', 'which', 
+      'did', 'thing', 'erase', 'then', 'will', 'not', 'recall', 'what', 'made', 
+      'a', 'with', 'itself', 'else', 'away'];
+
+
+    text(random(words), random(width), random(height));
+    textFont('Space Mono');
+    textAlign(CENTER);
+    colorMode(HSB);
+    hue = random(180, 360);
+    position = floor(random(0, words.length - wordCount));
+    textSize(random(50, 300));
+    fill(hue, 200, random(50, 95));
+    
+
+
+//original code for triangles below using beginShape
+    /*beginShape();
     vertex(0, -this.size * 2);
     vertex(-this.size, this.size * 2);
     vertex(this.size, this.size * 2);
-    endShape(CLOSE);
+    endShape(CLOSE)*/;
+
     pop();
   }
 
